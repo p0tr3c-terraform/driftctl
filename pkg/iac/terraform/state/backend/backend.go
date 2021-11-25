@@ -1,10 +1,12 @@
 package backend
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
 
+	"cloud.google.com/go/storage"
 	"github.com/cloudskiff/driftctl/pkg/iac/config"
 	"github.com/pkg/errors"
 )
@@ -15,6 +17,7 @@ var supportedBackends = []string{
 	BackendKeyHTTP,
 	BackendKeyHTTPS,
 	BackendKeyTFCloud,
+	BackendKeyGS,
 }
 
 type Backend io.ReadCloser
@@ -53,6 +56,12 @@ func GetBackend(config config.SupplierConfig, opts *Options) (Backend, error) {
 		return NewHTTPReader(&http.Client{}, fmt.Sprintf("%s://%s", config.Backend, config.Path), opts)
 	case BackendKeyTFCloud:
 		return NewTFCloudReader(&http.Client{}, config.Path, opts)
+	case BackendKeyGS:
+		client, err := storage.NewClient(context.Background())
+		if err != nil {
+			return nil, err
+		}
+		return NewGSReader(client, config.Path)
 	default:
 		return nil, errors.Errorf("Unsupported backend '%s'", backend)
 	}
