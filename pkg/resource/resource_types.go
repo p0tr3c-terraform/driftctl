@@ -140,6 +140,7 @@ var supportedTypes = map[string]ResourceTypeMeta{
 	"aws_appautoscaling_policy":           {},
 	"aws_appautoscaling_scheduled_action": {},
 	"aws_apigatewayv2_api":                {},
+	"aws_launch_template":                 {},
 
 	"github_branch_protection": {},
 	"github_membership":        {},
