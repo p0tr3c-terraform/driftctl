@@ -139,7 +139,10 @@ var supportedTypes = map[string]ResourceTypeMeta{
 	}},
 	"aws_appautoscaling_policy":           {},
 	"aws_appautoscaling_scheduled_action": {},
-	"aws_apigatewayv2_api":                {},
+	"aws_apigatewayv2_api": {children: []ResourceType{
+		"aws_apigatewayv2_route",
+	}},
+	"aws_apigatewayv2_route": {},
 
 	"github_branch_protection": {},
 	"github_membership":        {},

@@ -12,6 +12,29 @@ type MockApiGatewayV2Repository struct {
 	mock.Mock
 }
 
+// ListAllApiRoutes provides a mock function with given fields: apiId
+func (_m *MockApiGatewayV2Repository) ListAllApiRoutes(apiId *string) ([]*apigatewayv2.Route, error) {
+	ret := _m.Called(apiId)
+
+	var r0 []*apigatewayv2.Route
+	if rf, ok := ret.Get(0).(func(*string) []*apigatewayv2.Route); ok {
+		r0 = rf(apiId)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]*apigatewayv2.Route)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(*string) error); ok {
+		r1 = rf(apiId)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // ListAllApis provides a mock function with given fields:
 func (_m *MockApiGatewayV2Repository) ListAllApis() ([]*apigatewayv2.Api, error) {
 	ret := _m.Called()
